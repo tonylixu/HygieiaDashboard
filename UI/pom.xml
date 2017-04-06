@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>HygieiaDashboard</artifactId>
+        <groupId>com.zebra.emc.tools</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>UI</artifactId>
+    <packaging>pom</packaging>
+    <name>>${project.groupId}:${project.artifactId}</name>
+    <description>Hygieia UI module</description>
+    <url>https://github.com/tonylixu/HygieiaDashboard.git</url>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!-- Allow users to aggregate the project output along with its dependencies,
+                 modules, site documentation and other files into a single distributable archive.
+                  -->
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <descriptor>assembly/bin.xml</descriptor>
+                    <tarLongFileMode>posix</tarLongFileMode>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-archive</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!-- Downloads/installs Node and NPM locally, runs npm install and any combination of
+             Bower, Grunt, Gulp, Jspm, Larma or Webpack.
+                 1. Let you keep frontend and backend builds as separate as possible
+                 2. Let you use Node.js in your build process without installing Node/NPM
+                 globally for your build system
+                 3. Let you ensure that the version of Node and NPM being run is the same in
+                 every build environment
+             -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <!-- if you have issues with your proxy, be careful
+                https://github.com/eirslett/frontend-maven-plugin/commit/bcd8a7883703e28e3c5346e1f34c64332994e442 -->
+                <version>0.0.29</version>
+                <configuration>
+                    <workingDirectory>./</workingDirectory>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>Install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v5.4.1</nodeVersion>
+                            <npmVersion>2.14.15</npmVersion>
+                            <nodeDownloadRoot>http://nodejs.org/dist</nodeDownloadRoot>
+                            <npmDownloadRoot>http://registry.npmjs.org/npm/-/</npmDownloadRoot>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <!-- Optional configuration which provides for running any npm command -->
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>bower install</id>
+                        <goals>
+                            <goal>bower</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>gulp build</id>
+                        <goals>
+                            <goal>gulp</goal>
+                        </goals>
+                        <!-- optional: the default phase is "generate-resources" -->
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <!-- optional: if not specified, it will run gulp's default
+                               task (and you can remove this whole <configuration> section.) -->
+                            <arguments>build</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

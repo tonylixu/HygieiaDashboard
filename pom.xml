@@ -5,6 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>${project.groupId}:${project.artifactId}</name>
+    <modules>
+        <module>UI</module>
+    </modules>
     <packaging>pom</packaging>
 
     <groupId>com.zebra.emc.tools</groupId>
