@@ -66,6 +66,18 @@
         <tag>HEAD</tag>
     </scm>
 
+    <properties>
+        <spring-data-releasetrain.version>Gosling-RELEASE</spring-data-releasetrain.version>
+        <mongodb.version>3.0.2</mongodb.version>
+        <mongo>3.0.2</mongo>
+        <spring.version>4.1.7.RELEASE</spring.version>
+        <jackson.version>2.5.0</jackson.version>
+        <guava.version>16.0.1</guava.version>
+        <pmd.version>3.6</pmd.version>
+        <jacoco.version>0.7.6.201602180812</jacoco.version>
+        <joda-time.version>2.7</joda-time.version>
+        <joda-convert.version>1.8.1</joda-convert.version>
+    </properties>
 
 
 </project>
