@@ -4,9 +4,173 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <name>${project.groupId}:${project.artifactId}</name>
+    <packaging>pom</packaging>
+
     <groupId>com.zebra.emc.tools</groupId>
     <artifactId>HygieiaDashboard</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <!-- Inherit from the spring-boot-starter-parent project to obtain sensible defaults.
+         The parent project provides the following features:
+             1. Java 1.6 as the default compiler level.
+             2. UTF-8 source encoding.
+             3. A Dependency Management section, allowing you to omit <version> tags for common
+                dependencies, inherited from the spring-boot-dependencies POM.
+             4. Sensible resource filtering.
+             5. Sensible plugin configuration (exec plugin, surefire, Git commit ID, shade).
+             6. Sensible resource filtering for application.properties and application.yml
+                including profile-specific files (e.g. application-foo.properties and
+                application-foo.yml)
+    -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.2.5.RELEASE</version>
+    </parent>
 
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Amit Mawkin</name>
+            <email>amit.mawkin@capitalone.com</email>
+            <organization>CapitalOne</organization>
+            <organizationUrl>http://www.capitalone.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Tapabrata Topo Pal</name>
+            <email>tapabrata.pal@capitalone.com</email>
+            <organization>CapitalOne</organization>
+            <organizationUrl>http://www.capitalone.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Tony Li Xu</name>
+            <email>tony@lixu.ca</email>
+            <organization>Zebra Technologies</organization>
+            <organizationUrl>https://www.zebra.com</organizationUrl>
+            <!-- Personal URL -->
+            <url>http://lixu.ca</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/tonylixu/HygieiaDashboard.git/</connection>
+        <developerConnection>scm:git:https://github.com/tonylixu/HygieiaDashboard.git/</developerConnection>
+        <url>https://github.com/tonylixu/HygieiaDashboard.git</url>
+        <tag>HEAD</tag>
+    </scm>
+
+    <properties>
+        <spring-data-releasetrain.version>Gosling-RELEASE</spring-data-releasetrain.version>
+        <mongodb.version>3.0.2</mongodb.version>
+        <mongo>3.0.2</mongo>
+        <spring.version>4.1.7.RELEASE</spring.version>
+        <jackson.version>2.5.0</jackson.version>
+        <guava.version>16.0.1</guava.version>
+        <pmd.version>3.6</pmd.version>
+        <jacoco.version>0.7.6.201602180812</jacoco.version>
+        <joda-time.version>2.7</joda-time.version>
+        <joda-convert.version>1.8.1</joda-convert.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <version>${pmd.version}</version>
+                <configuration>
+                    <excludeRoots>
+                        <excludeRoot>${project.basedir}/target/generated-sources/java</excludeRoot>
+                    </excludeRoots>
+                    <rulesets>
+                        <rulesets>${project.parent.basedir}/pmd.xml</rulesets>
+                    </rulesets>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>check</goal>
+                            <!-- disabled for now -->
+                            <!-- <goal>cpd-check</goal> -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>0.4.10</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <!--<groupId>org.sonarsource.scanner.maven</groupId>-->
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>3.0.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.5.1</version>
+                    <configuration>
+                        <source>1.8</source>
+                        <target>1.8</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${jacoco.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>defaultBuild</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <version>3.5.1</version>
+                            <configuration>
+                                <source>1.8</source>
+                                <target>1.8</target>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+    </profiles>
 </project>
