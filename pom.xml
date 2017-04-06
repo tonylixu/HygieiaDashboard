@@ -159,11 +159,16 @@
             <build>
                 <pluginManagement>
                     <plugins>
+                        <!-- The compiler to compile the source code -->
                         <plugin>
                             <groupId>org.apache.maven.plugins</groupId>
                             <artifactId>maven-compiler-plugin</artifactId>
                             <version>3.5.1</version>
                             <configuration>
+                                <!-- source: The version that your source code requires to
+                                compile
+                                     target: The oldest JRE version you want to support.
+                                 -->
                                 <source>1.8</source>
                                 <target>1.8</target>
                             </configuration>
