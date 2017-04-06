@@ -36,4 +36,27 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <name>Amit Mawkin</name>
+            <email>amit.mawkin@capitalone.com</email>
+            <organization>CapitalOne</organization>
+            <organizationUrl>http://www.capitalone.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Tapabrata Topo Pal</name>
+            <email>tapabrata.pal@capitalone.com</email>
+            <organization>CapitalOne</organization>
+            <organizationUrl>http://www.capitalone.com</organizationUrl>
+        </developer>
+        <developer>
+            <name>Tony Li Xu</name>
+            <email>tony@lixu.ca</email>
+            <organization>Zebra Technologies</organization>
+            <organizationUrl>https://www.zebra.com</organizationUrl>
+            <!-- Personal URL -->
+            <url>http://lixu.ca</url>
+        </developer>
+    </developers>
+
 </project>
