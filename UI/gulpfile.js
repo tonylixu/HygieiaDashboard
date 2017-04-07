@@ -151,3 +151,141 @@ gulp.task('serve', ['build'], function() {
         runSequence('test-data');
     });
 });
+
+/*******************************
+ * SUPPORTING TASKS
+ *******************************/
+ // Delete our distribution folder
+ gulp.task('clean', function() {
+    return gulp.src(hygieia.dist).pipe(clean());
+ });
+
+ // Move everything in the assets folder to distribution
+ gulp.task('assets', function() {
+    return gulp
+        .src([
+            hygieia.src + 'assets/**/*'
+        ])
+        .pipe(gulp.dest(hygieia.dist + 'assets'));
+ });
+
+ // Loop through and grab all the theme less files,
+ // process them, and place them in the styles folder.
+ // the app adds the references to the stylesheet based
+ // on user preferences so there is no need to inject the
+ // files in to the UI directly
+ gulp.task('themes', function() {
+     // get a list of widget files to import. this will only work if the theme
+     // file directly has the insert:widgets code. it will not work as part of an
+     // imported less file
+     var widgetLessFiles = glob.sync('src/components/widgets/**/*.less', null);
+     widgetLessFiles = widgetLessFiles.map(function(file) {
+         return "@import '" + file.replace(hygieia.src, '../../') + "';";
+     });
+
+     return gulp.src(themeFiles)
+         .pipe(replace('/** insert:widgets **/', widgetLessFiles.join('')))
+         .pipe(less({
+             paths: [
+                 hygieia.src + 'components'
+             ]
+         }))
+         .on('error', function(err) {
+             console.error(err.toString());
+             this.emit('end');
+         })
+         .pipe(minifyCss())
+         .pipe(gulp.dest(hygieia.dist + 'styles'));
+ });
+
+
+// move js files over
+gulp.task('js', function() {
+    var stream = gulp.src(jsFiles);
+
+    if(!!argv.prod) {
+        stream = stream.pipe(concat('app/app.js'));
+    }
+
+    return stream.pipe(gulp.dest(hygieia.dist));
+});
+
+
+// move our html views to a template cache folder so each one
+// doesn't need to be happen as an ajax request
+gulp.task('views', function() {
+    return gulp
+        .src(viewFiles)
+        .pipe(minifyHtml({
+            collapseWhitespace: true
+        }))
+        .pipe(tmplCache('template-cache.js', {
+            module: config.module
+        }))
+        .pipe(gulp.dest(hygieia.dist));
+});
+
+// move our fonts folder
+gulp.task('fonts', function() {
+    return gulp
+        .src([
+            'bower_components/**/*',
+            'src/components/themes/*'
+        ])
+        .pipe(filter('**/*.{eot,ttf,woff,css}'))
+        .pipe(flatten())
+        .pipe(gulp.dest(hygieia.dist + 'fonts'));
+});
+
+// move the source html files and inject the widget javascript
+gulp.task('html', function() {
+    return gulp
+        // move the root html files to the distribution folder
+        .src([
+            hygieia.src + '*.html',
+            hygieia.src + 'favicon.ico'
+        ])
+        .pipe(gulp.dest(hygieia.dist))
+
+        // now just work with the main index file
+        .pipe(filter(['index.html']))
+
+        // wiredep replaces bower:js with references to all bower dependencies
+        .pipe(inject(gulp.src(
+            wiredep({
+                exclude: [/bootstrap\.js/, /bootstrap\.css/, /bootstrap\.css/, /foundation\.css/]
+            }).js)
+            .pipe(concat('bower.js'))
+            .pipe(gulp.dest(hygieia.dist + 'bower_components')),
+            { name: 'bower', ignorePath: hygieia.dist, addRootSlash: false })
+        )
+        .pipe(gulp.dest(hygieia.dist))
+
+        // replace inject:js with script references to all the files in the following sources
+        .pipe(inject(gulp.src(
+    		!!argv.prod ? ['src/app/app.js'] : jsFiles)
+    		.pipe(order(['app/app.js', 'app/dashboard/core/module.js', 'app/**/*.js', 'components/**/*.js'])),
+    		{ name: 'hygieia', ignorePath: 'src', addRootSlash: false }))
+
+        // replace custom placeholders with our configured values
+        .pipe(replace('[config]', JSON.stringify(config)))
+        .pipe(replace('[config-module]', config.module))
+
+        // make sure the file is rewritten
+        .pipe(gulp.dest(hygieia.dist));
+});
+
+// move test data files, but only if running locally
+gulp.task('test-data', function() {
+    return gulp
+        .src(testDataFiles)
+        .pipe(gulpIf(config.local, gulp.dest(hygieia.dist + 'test-data')));
+});
+
+
+gulp.task('chartist', function() {
+    return gulp
+        .src(['src/app/chartist/chartist.less'])
+        .pipe(less())
+        .pipe(gulp.dest('./'));
+});
