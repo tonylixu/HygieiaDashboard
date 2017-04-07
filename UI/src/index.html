@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--
+    The no-js class is used by Moderniz feature detection library, when Modernizr loads, it
+    replaces no-js with js. If JavaScript is disabled, the class remains. This allows you to write
+    CSS with easily targets either condition.
+
+    The ng-app directive tells AngularJS that this is the root element of the AngularJS
+    application. All AngularJS applications must have a root element. You can also only have one
+    ng-app directive in your HTML document. If more than one ng-app directive appears, the first
+    appearance will be used.
+-->
+<html class="no-js" ng-app="[config-module]">
+<head>
+    <meta charset="utf-8">
+    <title>Zebra EMC Engineering Dashboard</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="fonts/toaster.css">
+    <link rel="stylesheet" href="fonts/custom.css">
+
+    <script>
+        var HygieiaConfig = [config];
+
+
+    </script>
+</head>
+
+<body>
+<toaster-container
+    toaster-options="{'position-class': 'toast-bottom-right','progress-bar':true,'close-button':true,'toaster-id': 1, 'animation-class': 'toast-bottom-right'}">
+</toaster-container>
+
+<div id="container" class="screen-fade" ng-view>
+</div>
+
+<script src="template-cache.js"></script>
+
+</body>
+</html>
