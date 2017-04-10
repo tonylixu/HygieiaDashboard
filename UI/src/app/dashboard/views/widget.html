@@ -1,0 +1,15 @@
+<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+<div class="widget row"
+     ng-class="{'configure' : state == widget_state.CONFIGURE, 'alert': display == display_state.ERROR}"
+     style="border: .2rem dashed rgba(255,255,255,.6);border-radius: 1rem;">
+    <div class="widget-body">
+
+        <div class="widget-body-config clickable" ng-click="checkPermission()" style="color: #555555 ;padding: 0rem;
+        			display: block;line-height: 1.4rem;margin:0rem;font-size: 1.5rem;text-align: left;">
+            <div>
+                <div class="fa fa-cog fa-lg"></div>
+                <div>Configure</div>
+            </div>
+        </div>
+    </div>
+</div>
