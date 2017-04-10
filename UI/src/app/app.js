@@ -87,7 +87,7 @@ var localStorageSupported = (function () {
                 }
             })
             // Administrative functionality
-            .when('/admin'. {
+            .when('/admin', {
                 templateUrl: 'app/dashboard/views/admin.html',
                 controller: 'AdminController',
                 controllerAs: 'ctrl'

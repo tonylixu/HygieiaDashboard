@@ -22,7 +22,7 @@
         // Search for current builds
         function details(params){
             return $http.get(HygieiaConfig.local ? testDetailRoute : buildDetailRoute, { params: params })
-            .then(function (response)) {
+            .then(function (response) {
                 return response.data;
             });
         }
