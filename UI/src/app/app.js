@@ -1,4 +1,6 @@
 // Test to see if local storage is supported functionality
+// Note: In the future, instead of writing this function ourselves, use Modernizr to detect
+// support for HTML5 Storage (http://diveintohtml5.info/storage.html).
 var localStorageSupported = (function () {
     try {
         localStorage.setItem('foo', 'bar');
@@ -10,6 +12,7 @@ var localStorageSupported = (function () {
 })();
 
 (function () {
+    // Execute in strict mode, you can not use undeclared variables
     'use strict';
 
     // Set default theme
@@ -23,26 +26,29 @@ var localStorageSupported = (function () {
         }
     }
 
-    // Add the theme stylesheet in the header
+    // <link>
+    // Create link element and add the theme stylesheet in the header
     var link = document.createElement('link');
-
+    // Unique id for this link document
     link.setAttribute('id', 'theme');
+    // Returns the relationship between the current document and the linked document
     link.setAttribute('rel', 'stylesheet');
+    // Returns the URL of the linked document
     link.setAttribute('href', 'styles/' + theme + '.css');
-
+    // Add link element into <head>
     document.getElementsByTagName('head')[0].appendChild(link);
 
-    // Create the angular app
+    // Create the angular app and inject angular modules into HygieiaConfigure module
     angular.module(HygieiaConfig.module, [
-        'ngAnimate',
-        'ngSanitize',
-        'ngRoute',
+        'ngAnimate', // Provides support for CSS-based and JS-based animations
+        'ngSanitize', // Provides functionality to sanitize HTML
+        'ngRoute', // Provides routing and deeplinking services and directives
         HygieiaConfig.module + '.core',
-        'ui.bootstrap',
-        'fitText',
-        'angular-chartist',
-        'ngCookies',
-        'validation.match',
+        'ui.bootstrap', // Provides native AngularJS directives based on Bootstrap's markup and CSS
+        'fitText', // A jQuery plugin for inflating web type
+        'angular-chartist', // Angular directive for Chartist.js
+        'ngCookies', // Provides a convenient wrapper for reading and writing browser cookies
+        'validation.match', // Checks if one input matches another. Useful for confirming passwords, emails, or anything.
         'as.sortable',
         'ui.select',
         'chart.js',

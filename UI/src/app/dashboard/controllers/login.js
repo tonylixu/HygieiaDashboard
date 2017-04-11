@@ -1,6 +1,7 @@
 /**
  * Controller for performing authentication or signingup a new user */
 (function () {
+    // Execute in strict mode, you can not use undeclared variables
     'use strict';
     var app = angular.module(HygieiaConfig.module)
     var inject = ['$cookies', '$http', '$location', '$scope', 'loginData', 'dashboardData','$cookieStore']
