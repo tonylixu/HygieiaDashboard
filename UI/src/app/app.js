@@ -61,6 +61,7 @@ var localStorageSupported = (function () {
         // in data providers and then redirect them to a remote api if
         // necessary
         function ($httpProvider) {
+            // Add into the interceptors array
             $httpProvider.interceptors.push(function () {
                 return {
                     request: function (config) {
