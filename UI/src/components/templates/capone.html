@@ -1,0 +1,219 @@
+<div ng-controller="CapOneTemplateController as template"
+     style="overflow-y: hidden; overflow-x: hidden; margin-top: 20px;">
+    <div id="header">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+
+                <a ng-click="goToMain('')" class="pull-left"><img
+                    style="width: 54px; height: 70px;"
+                    ng-src="assets/img/zebra-logo.png"></a> <span style="margin-left:300px;"> Zebra
+					Dashboard</span>
+                <div class="pull-right">
+
+                    <span style="color: black;font-size: 1.5rem;position: relative;top: 5px;">
+                    Welcome  {{ username | uppercase}}
+
+                       <span class="fa-stack fa-lg" ng-show="ctrl.myadmin" ng-click="ctrl.admin()">
+                           <i class="fa fa-circle fa-stack-2x"></i>
+                           <i class="fa fa-cog fa-stack-1x"></i>
+                       </span>
+
+
+                       <span class="fa-stack fa-lg" style="color: white; cursor: pointer"
+                             ng-click="logout()">
+<!--                            <i  class="fa fa-circle fa-stack-2x"></i> -->
+                           <i style="color: black;" class="fa fa-power-off fa-stack-1x"></i>
+                       </span>
+
+                        <div class="divider"></div>
+                   </span>
+                    <div class="btn-group" dropdown is-open="settingOption.isopen"
+                         ng-mouseleave="settingOption.isopen = false">
+                        <button class="btn btn-default btn-sm"
+                                ng-mouseenter="settingOption.isopen = false"
+                                ng-click="" title="Settings">
+							<span><i class="fa fa-cog"></i>
+                        </button>
+                        <button id="single-button" type="button"
+                                ng-mouseenter="settingOption.isopen = true"
+                                class="btn btn-default btn-sm" dropdown-toggle>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu nomargin pull-right" role="menu"
+                            style="cursor: pointer">
+                            <li role="menuitem"><a
+                                ng-class="{'disabled-anchor': isDisabled === true}"
+                                title="Configuration"
+                                ng-click="goToView('Configuration',ctrl.dashboard)"><i
+                                class="fa fa-list-alt"></i> Configuration</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div id="wrapper" ng-if="view != 'Configuration'">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav products" style="overflow-y: hidden;">
+                <div class="product-heading" ng-click="showView()">Products</div>
+                <div style="margin-top: 20px;">
+                    <select class="form-control"
+                            ng-options="product.name for product in products"
+                            ng-change="selectProduct(productMeta.name)"
+                            ng-model="productMeta.name">
+                    </select>
+                </div>
+            </ul>
+        </div>
+        <div id="page-content-wrapper">
+            <!-- 		 <button ng-click="pop()">Show a Toaster</button> -->
+            <div class="conter-wrapper ng-scope"
+                 ng-if="!productSelected && view == ''">
+
+                <div class="card">
+                    <div class="card-inverse card-info card-header">
+                        <h5 class="card-inverse card-title">Zebra!</h5>
+                    </div>
+                    <div class="card-block ">
+                        <h2
+                            style="text-align: center; font-weight: 600; color: #000000; font-size: 28px; letter-spacing: 2px; text-transform: uppercase;">
+                            ZEBRA
+                            MAKES BUSINESSES AS SMART AND CONNECTED AS THE WORLD WE LIVE IN</h2>
+                        <blockquote class="blockquote">
+                            <br/> <br/> Zebra builds tracking technology and solutions that
+                            generate actionable information and insight, giving companies
+                            unprecedented visibility into their businesses by giving physical
+                            things a digital voice. <br/>
+
+                            <!-- 						<footer _ngcontent-egt-34="">  </footer> -->
+                        </blockquote>
+                        <blockquote class="blockquote blockquote-reverse">
+                            <p class="m-b-0">Zebra extensive portfolio of solutions give
+                                real-time visibility into everything from products and physical
+                                assets to people, providing very precise operational data not
+                                only about where things are, but what condition they are in.
+                                This allows business leaders to use data to make better, more
+                                informed decisions, respond in real-time and ultimately, help
+                                businesses understand how they work, and how they could work
+                                better.</p>
+                            <footer class="blockquote-footer">
+                                <cite title="Source Title">Zebra</cite>
+                            </footer>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+            <ul class="product_list_widget" ng-if="productSelected">
+
+                <li class="col-sm-6 col-md-4">
+                    <div class="product-wrap"
+                         style="padding: 0.3px; border: 2px dotted #bebede; cursor: pointer; background-color: white;">
+                        <a class="product-link" title="High Level Dashboard">
+                            <div class="portfolio-img">
+                                <img width="350" height="180" src="assets/img/dashboard-1.jpg"
+                                     class="attachment-shop_thumbnail wp-post-image"
+                                     ng-click="openView('Dash1')">
+                            </div>
+                            <h5 class="product-name">
+                                High Level Dashboard<strong style="color: #36A2EB"> (In
+                                Progress)</strong>
+                            </h5> <!-- 							<p style="color: #FF6384;">Not Ready</p>  -->
+                        </a>
+                        <!-- 						<p style="color: black;">High Level Dashboard</p> -->
+                    </div>
+                </li>
+                <li class="col-sm-6 col-md-4">
+                    <div class="product-wrap"
+                         style="padding: 0.3px; border: 2px dotted #bebede; cursor: pointer; background-color: white;">
+                        <a class="product-link" title="Solutions and ART Release">
+                            <div class="portfolio-img">
+                                <img width="350" height="180" src="assets/img/dashboard-2.png"
+                                     class="attachment-shop_thumbnail wp-post-image"
+                                     alt="Flatlogic Dashboard">
+                            </div>
+                            <h5 class="product-name">
+                                Solutions and ART Release<strong style="color: #FF6384">(Not
+                                Ready)</strong>
+                            </h5>
+                        </a>
+                    </div>
+                </li>
+                <li class="col-sm-6 col-md-4">
+                    <div class="product-wrap"
+                         style="padding: 0.3px; border: 2px dotted #bebede; cursor: pointer; background-color: white;">
+                        <a class="product-link" title="Build/Continuous Delivery">
+                            <div class="portfolio-img">
+                                <img width="350" height="180" src="assets/img/dashboard-3.jpg"
+                                     ng-click="openJenkinsView('Build')">
+                            </div>
+                            <h5 class="product-name">Build/Continuous Delivery</h5>
+                        </a>
+                    </div>
+                </li>
+                <li class="col-sm-6 col-md-4" style="margin-top: 20px;">
+                    <div class="product-wrap"
+                         style="padding: 0.3px; border: 2px dotted #bebede; cursor: pointer; background-color: white;">
+                        <a class="product-link" title="Test Metrics View">
+                            <div class="portfolio-img">
+                                <img width="350" height="180" src="assets/img/dashboard-4.jpg"
+                                     class="attachment-shop_thumbnail wp-post-image"
+                                     alt="RDash AngularJS" ng-click="openView('Dash4')">
+                            </div>
+                            <h5 class="product-name">
+                                Test Metrics View<strong style="color: #36A2EB"> (In
+                                Progress)</strong>
+                            </h5>
+                        </a>
+                    </div>
+                </li>
+                <li class="col-sm-6 col-md-4" style="margin-top: 20px;">
+                    <div class="product-wrap"
+                         style="padding: 0.3px; border: 2px dotted #bebede; cursor: pointer; background-color: white;">
+                        <a class="product-link" title="Scrum Level View">
+                            <div class="portfolio-img">
+                                <img width="350" height="180" src="assets/img/dashboard-2.png"
+                                     class="attachment-shop_thumbnail wp-post-image"
+                                     alt="SB Admin BS 4 Angular2">
+                            </div>
+                            <h5 class="product-name">
+                                Scrum Level View<strong style="color: #FF6384">(Not
+                                Ready)</strong>
+                            </h5>
+                        </a>
+                    </div>
+                </li>
+                <li class="col-sm-6 col-md-4" style="margin-top: 20px;">
+                    <div class="product-wrap"
+                         style="padding: 0.3px; border: 2px dotted #bebede; cursor: pointer; background-color: white;">
+                        <a class="product-link" title="Build/Continuous Delivery Gerrit View">
+                            <div class="portfolio-img" ng-disabled="isDisabled">
+                                <img width="350" height="180" src="assets/img/dashboard-6.jpg"
+                                     ng-click="openGerritView('Repo')">
+                            </div>
+                            <h5 class="product-name">Build/Continuous Delivery Gerrit
+                                View</h5>
+                        </a>
+                    </div>
+                </li>
+
+            </ul>
+            <div ng-if="view == 'Build' && jenkinsConfig">
+                <div ng-include="'components/widgets/build/view.html'"></div>
+            </div>
+            <div ng-if="view == 'Dash1'">
+                <div ng-include="'components/widgets/polarion/view.html'"></div>
+            </div>
+            <div ng-if="view == 'Repo' && gerritConfig">
+                <div ng-include="'components/widgets/repo/view.html'"></div>
+            </div>
+            <div ng-if="view == 'Dash4'">
+                <div ng-include="'components/widgets/polarionMetrics/view.html'"></div>
+            </div>
+        </div>
+    </div>
+    <div class="" ng-if="view == 'Configuration'">
+        <div ng-include="'components/templates/configuration.html'"></div>
+    </div>
+</div>
