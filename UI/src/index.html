@@ -14,16 +14,20 @@
     <meta charset="utf-8">
     <title>Hygieia Dashboard</title>
     <meta name="description" content="">
+    <!-- viewport element gives the browser instructions on how to control the page's dimensions and scaling. "width=device-width sets the width of the page to follow the screen-width of the device -->
     <meta name="viewport" content="width=device-width">
 
+    <!-- Import toaster.css and custom.css stylesheet -->
     <link rel="stylesheet" href="fonts/toaster.css">
     <link rel="stylesheet" href="fonts/custom.css">
 
+    <!-- Point to HygieiaConfig javascript file --> 
     <script>
         var HygieiaConfig = [config];
     </script>
 </head>
 <body>
+<!-- AngularJS Toaster is an AngularJS port of the toastr non-blocking notification jQuery library, add toaster container directive -->
 <toaster-container toaster-options="{'position-class': 'toast-bottom-right','progress-bar':true,'close-button':true,'toaster-id': 1, 'animation-class': 'toast-bottom-right'}">
 </toaster-container>
 
