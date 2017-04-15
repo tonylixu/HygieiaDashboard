@@ -1,0 +1,107 @@
+<style>
+.textarea1{
+width:400px;
+height:150px;
+} 
+.textarea2{
+width:200px;
+height:150px;
+}
+.textarea4{
+width:400px;
+height:50px;
+} 
+ 
+</style>
+<div class="row">
+            <div class="col-md-8 col-md-offset-2" style="margin-top:20px;">
+                <h3>
+                    Configuration
+                    <span class= "pull-right" style="cursor:pointer;" ng-click="goToMain('')" title="Close Configuration" >
+                    <i class="fa fa-times"></i>
+                </span>
+                    
+                </h3>
+        <div class="card grid-bx">
+        <form name="form" role="form"  ng-submit="saveConfig()" show-validation="" 
+                class="ng-pristine ng-valid ng-valid-required ng-valid-minlength ng-valid-maxlength ng-valid-email">
+            <div class="row  " >
+                <div class="form-group" >
+                    <div class="col-md-3">
+                        <label><h4 style="font-size: 15px;color: #1c1c1c;">Product</h4></label>
+                    </div>
+                    <div class="col-md-9" >
+                            <select class="form-control"  ng-options="product.name for product in products" 
+                            ng-change="onSelectedProduct(productConfig.name)" ng-model="productConfig.name" >
+                    </select>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="form-group" >
+                    <div class="col-md-3">
+                        <label><h4 style="font-size: 15px;color: #1c1c1c;">Jenkins</h4>
+                    </button>
+                    </label>
+                        
+                    </div>
+                    <div class="col-md-6">
+<!--                        <span class="form-control">{{viewname1}}</span> -->
+                        <textarea class="textarea4" id="jenkins_textarea" style="color: black;"  ></textarea>
+                        
+                    </div>
+                    <div class="col-md-3 widget-body" style="margin-top: -10px;" >
+                                    <div class="dashboard-widgets container-fluid" widget-container dashboard="ctrl.dashboard" >
+                                         <widget  name="build"></widget>
+                                    </div>
+                            </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group" >
+                    <div class="col-md-3">
+                        <label><h4 style="font-size: 15px;color: #1c1c1c;">Gerrit</h4>
+                    </button>
+                    </label>
+                        
+                    </div>
+                    <div class="col-md-6" style="color: black;">
+<!--                        <span class="form-control">{{gerritId}}</span> -->
+                        <textarea class="textarea1" id="gerrit_textarea" ></textarea>
+                        
+                    </div>
+                    <div class="col-md-3 widget-body" >
+                                    <div class="dashboard-widgets container-fluid" widget-container dashboard="ctrl.dashboard" >
+                                         <widget  name="repo"></widget>
+                                    </div>
+                            </div>
+                </div>
+            </div>
+            
+            <div class="row" >
+                <div class="form-group" >
+                    <div class="col-md-3">
+                        <label><h4 style="font-size: 15px;color: #1c1c1c;">Jira</h4></label>
+                    </div>
+                    <div class="col-md-3" style="color: black;">
+                        <textarea class="textarea2" id="impactedProducts_textarea" ></textarea>
+                        
+                    </div>
+                    <div class="col-md-3" style="color: black;">
+                        <textarea class="textarea2" id="targetList_textarea" ></textarea>
+                    </div>
+                    <div class="col-md-3 widget-body" >
+                                    <div class="dashboard-widgets container-fluid" widget-container dashboard="ctrl.dashboard" >
+                                         <widget  name="polarion"></widget>
+                                    </div>
+                            </div>
+                </div>
+            </div>
+            <br/>
+            <div class="button-row row text-center">
+            <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary btn-sm" >Save</button></div>
+            </form>
+            </div>  
+            </div>
+        </div>
